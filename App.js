@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import InfoText from './components/InfoText'
 
 const STORAGE_KEY = '@items_key'
 
@@ -27,7 +28,7 @@ export default function App() {
       name: name,
       isStruckThrough: false, // new flag to track strikethrough state
     }
-    setData([newItem, ...data])
+    setData((prevData) => [newItem, ...prevData])
   }, [data])
 
   const getData = async () => {
@@ -79,30 +80,35 @@ export default function App() {
     setData(updatedData); // Update the state with the new order
 };
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>To Do</Text>
-      <Add add={add} />
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <Row
-            item={item}
-            selectedId={selectedId}
-            select={setSelectedId}
-            toggleStrikethrough={toggleStrikethrough} // Pass the function to toggle strikethrough
-          />
-        )}
-      />
-    </SafeAreaView>
-  )
+return (
+  <SafeAreaView style={styles.container}>
+    <Text style={styles.header}>To-Do App</Text>
+    <InfoText />
+    <Add add={add} />
+    <FlatList 
+      data={data}
+      keyExtractor={(item) => item.id}
+      extraData={selectedId}
+      renderItem={({item}) => (
+        <Row 
+          item={item}
+          selectedId={selectedId}
+          select={setSelectedId}
+          data={data}
+          setData={setData}
+          toggleStrikethrough={toggleStrikethrough}
+        />
+      )}
+    />
+  </SafeAreaView>
+)
+
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f0f3f7',
     alignItems: 'center',
     justifyContent: 'center',
   },

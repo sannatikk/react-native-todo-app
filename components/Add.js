@@ -1,6 +1,7 @@
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
+import { Keyboard } from 'react-native'
 
 export default function Add({add}) {
 
@@ -9,6 +10,7 @@ export default function Add({add}) {
     const save = () => {
         add(name)
         setName('') // clear the input field
+        Keyboard.dismiss() // hide the keyboard
     }
 
     return (
@@ -44,20 +46,22 @@ const styles = StyleSheet.create({
         flexShrink: 1, // Prevents TextInput from growing indefinitely
         minWidth: 150, // Ensures TextInput has a minimum width
         borderWidth: 1,
-        borderColor: "#ddd",
+        borderColor: "#989ea6",
         borderRadius: 5,
         padding: 8,
+        backgroundColor: "#fff",
     },
     button: {
         marginLeft: 16,
-        backgroundColor: "#f1f1f1",
-        paddingVertical: 10,
+        backgroundColor: "#cfd6e3",
+        paddingVertical: 8,
         paddingHorizontal: 16,
+        borderWidth: 1,
+        borderColor: "#989ea6",
         borderRadius: 5,
     },
     buttonText: {
         color: "#000",
-        fontSize: 16,
         textAlign: "center",
     }
 })
