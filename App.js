@@ -1,8 +1,7 @@
-import { StatusBar } from 'expo-status-bar'
 import { FlatList, SafeAreaView, StyleSheet, Text } from 'react-native'
 import Row from './components/Row'
 import Add from './components/Add'
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -12,7 +11,6 @@ const STORAGE_KEY = '@items_key'
 
 export default function App() {
   const [data, setData] = useState([])
-  const [selectedId, setSelectedId] = useState(null)
 
   useEffect(() => {
     getData()
@@ -26,7 +24,7 @@ export default function App() {
     const newItem = {
       id: uuidv4(), // unique id for each item
       name: name,
-      isStruckThrough: false, // new flag to track strikethrough state
+      isStruckThrough: false, // flag to track strikethrough state
     }
     setData((prevData) => [newItem, ...prevData])
   }, [data])
@@ -59,26 +57,26 @@ export default function App() {
         if (item.id === id) {
             return {
                 ...item,
-                isStruckThrough: !item.isStruckThrough, // Toggle strikethrough
-            };
+                isStruckThrough: !item.isStruckThrough, // toggle strikethrough
+            }
         }
-        return item;
-    });
+        return item
+    })
 
-    // Move the item based on the new strikethrough state
+    // move the item based on strikethrough state
     const itemIndex = updatedData.findIndex(item => item.id === id);
-    const [movedItem] = updatedData.splice(itemIndex, 1); // Remove the item
+    const [movedItem] = updatedData.splice(itemIndex, 1) // remove item
 
     if (movedItem.isStruckThrough) {
-        // Move item to the bottom if strikethrough is applied
+        // move item to the bottom if strikethrough is applied
         updatedData.push(movedItem);
     } else {
-        // Move item to the top if strikethrough is removed
+        // move item to the top if strikethrough is removed
         updatedData.unshift(movedItem);
     }
 
-    setData(updatedData); // Update the state with the new order
-};
+    setData(updatedData) // update the state with the new order
+}
 
 return (
   <SafeAreaView style={styles.container}>
@@ -88,12 +86,9 @@ return (
     <FlatList 
       data={data}
       keyExtractor={(item) => item.id}
-      extraData={selectedId}
       renderItem={({item}) => (
         <Row 
           item={item}
-          selectedId={selectedId}
-          select={setSelectedId}
           data={data}
           setData={setData}
           toggleStrikethrough={toggleStrikethrough}

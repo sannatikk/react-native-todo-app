@@ -1,25 +1,24 @@
-import { Text, StyleSheet, Pressable, View } from "react-native";
-import React from "react";
-import { Ionicons } from "@expo/vector-icons";
+import { Text, StyleSheet, Pressable, View } from "react-native"
+import React from "react"
+import { Ionicons } from "@expo/vector-icons"
 
-export default function Row({ item, selectedId, select, data = [], setData, toggleStrikethrough }) {
+export default function Row({ item, data = [], setData, toggleStrikethrough }) {
   
-  // Function to handle item removal
+
   const remove = () => {
     if (data && Array.isArray(data)) {
-      const updatedData = data.filter((currentItem) => currentItem.id !== item.id);
-      setData(updatedData); // Update the list of items
+      const updatedData = data.filter((currentItem) => currentItem.id !== item.id)
+      setData(updatedData)
     } else {
-      console.error("Data is not an array or is undefined");
+      console.error("Data is not an array or is undefined")
     }
-  };
+  }
 
   return (
     <View style={styles.rowContainer}>
       <Pressable
         onPress={() => {
-          toggleStrikethrough(item.id); // Toggle strikethrough
-          select(item.id); // Optionally select item if needed
+          toggleStrikethrough(item.id)
         }}
         style={styles.row}
       >
@@ -35,12 +34,12 @@ export default function Row({ item, selectedId, select, data = [], setData, togg
         <Ionicons
           name="trash"
           size={24}
-          onPress={remove} // Call remove function
+          onPress={remove}
           style={styles.trashIcon}
         />
       )}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
     color: "#808080",
   },
   trashIcon: {
-    marginLeft: 12, // Space between text and trash icon
+    marginLeft: 12,
     color: "#808080",
   },
 });
