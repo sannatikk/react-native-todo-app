@@ -5,6 +5,8 @@ import { Keyboard } from 'react-native'
 
 export default function Add({add}) {
 
+    // here we are using useState instead of useReducer because we only need to manage a single piece of state
+
     const [name, setName] = useState('')
 
     const save = () => {
@@ -38,13 +40,13 @@ const styles = StyleSheet.create({
     },
     container: {
         flexDirection: 'row',
-        alignItems: 'center', // Keep input and button aligned
+        alignItems: 'center', // keep input and button aligned
         marginBottom: 16,
     },
     form: {
-        flex: 1, // Allows TextInput to take up available space without pushing the button offscreen
-        flexShrink: 1, // Prevents TextInput from growing indefinitely
-        minWidth: 150, // Ensures TextInput has a minimum width
+        flex: 1, // allows TextInput to take up available space without pushing the button offscreen
+        flexShrink: 1, // prevents TextInput from growing indefinitely
+        minWidth: 150, // ensures TextInput has a minimum width
         borderWidth: 1,
         borderColor: "#989ea6",
         borderRadius: 5,

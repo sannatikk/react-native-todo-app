@@ -2,45 +2,31 @@ import { Text, StyleSheet, Pressable, View } from "react-native"
 import React from "react"
 import { Ionicons } from "@expo/vector-icons"
 
-export default function Row({ item, data = [], setData, toggleStrikethrough }) {
-  
+export default function Row({ item, dispatch }) {
 
-  const remove = () => {
-    if (data && Array.isArray(data)) {
-      const updatedData = data.filter((currentItem) => currentItem.id !== item.id)
-      setData(updatedData)
-    } else {
-      console.error("Data is not an array or is undefined")
-    }
-  }
 
-  return (
-    <View style={styles.rowContainer}>
-      <Pressable
-        onPress={() => {
-          toggleStrikethrough(item.id)
-        }}
-        style={styles.row}
-      >
-        <Text
-          style={[styles.itemText, item.isStruckThrough && styles.strikethrough]}
+    return (
+      <View style={styles.rowContainer}>
+        <Pressable
+          onPress={() => dispatch({ type: "TOGGLE_STRIKETHROUGH", payload: item.id })} // dispatch an action to toggle the strikethrough based on the item's id
+          style={styles.row}
         >
-          {item.name}
-        </Text>
-      </Pressable>
-
-      {/* Show trash icon only if the item is struck-through */}
-      {item.isStruckThrough && (
-        <Ionicons
-          name="trash"
-          size={24}
-          onPress={remove}
-          style={styles.trashIcon}
-        />
-      )}
-    </View>
-  )
-}
+          <Text style={[styles.itemText, item.isStruckThrough && styles.strikethrough]}>
+            {item.name}
+          </Text>
+        </Pressable>
+  
+        {item.isStruckThrough && (
+          <Ionicons
+            name="trash"
+            size={24}
+            onPress={() => dispatch({ type: "REMOVE_ITEM", payload: item.id })} // dispatch an action to remove the item based on the item's id
+            style={styles.trashIcon}
+          />
+        )}
+      </View>
+    )
+  }
 
 const styles = StyleSheet.create({
   rowContainer: {

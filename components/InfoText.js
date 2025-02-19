@@ -1,5 +1,5 @@
-import { StyleSheet, Text } from "react-native";
-import React from "react";
+import { StyleSheet, Text } from "react-native"
+import React from "react"
 
 export default function InfoText() {
     return (
@@ -7,7 +7,7 @@ export default function InfoText() {
         Click an item to mark as done. Click again to undo.
         Permanently delete a done item by clicking the trash icon.
         </Text>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
